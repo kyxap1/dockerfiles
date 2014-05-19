@@ -1,0 +1,33 @@
+Step 0 : FROM pro-manage.net/debian:latest
+ ---> 1a65b547a6e4
+Step 1 : MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
+ ---> Using cache
+ ---> 51bf91a702f3
+Step 2 : ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ ---> Using cache
+ ---> c80b5b40d77e
+Step 3 : ADD http://kyxap.org.ua/rc/screenrc /root/.screenrc
+ ---> Using cache
+ ---> 2785c9549ac9
+Step 4 : ADD http://kyxap.org.ua/rc/vimrc /root/.vimrc
+ ---> Using cache
+ ---> 12ff42b88afd
+Step 5 : RUN apt-get update
+ ---> Using cache
+ ---> 6dd3c4607a6c
+Step 6 : RUN apt-get install -y openssh-server
+ ---> Using cache
+ ---> c2da0a45a04f
+Step 7 : RUN apt-get install -y moreutils apt-utils bash-completion bc bridge-utils busybox bzip2 coreutils curl dialog dnsutils dos2unix fakeroot findutils gzip hostname htop iotop iproute iptables iputils-ping less links locales lsof make mtr netcat patch perl procps psmisc pwgen rsync screen sed strace supervisor tar tcpdump telnet unzip vim-nox wget whois zip
+ ---> Using cache
+ ---> d4804a5b61dd
+Step 8 : RUN mkdir -p /var/run/sshd
+ ---> Using cache
+ ---> 5459320d1142
+Step 9 : RUN mkdir -p /var/log/supervisor
+ ---> Using cache
+ ---> 56785aa554f3
+Step 10 : CMD ["/usr/bin/supervisord"]
+ ---> Using cache
+ ---> 6be563c7661c
+Successfully built 6be563c7661c
