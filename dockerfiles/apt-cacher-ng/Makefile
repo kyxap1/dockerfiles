@@ -2,10 +2,10 @@
 #
 SHELL := /bin/bash
 
-IMAGE_NAME= "pro-manage.net/debian"
+IMAGE_NAME= "pro-manage.net/apt-cacher"
 IMAGE_ID= $(shell docker inspect --format='{{ .id }}' $(IMAGE_NAME) )
 
-CONTAINER_NAME= "debian.pro-manage.net"
+CONTAINER_NAME= "apt-cacher.pro-manage.net"
 CONTAINER_ID= $(shell docker inspect --format='{{ .id }}' $(CONTAINER_NAME) )
 
 all: build
@@ -15,7 +15,7 @@ rmi:
 	-@[[ '$(IMAGE_ID)' ]] && docker rmi -f $(IMAGE_NAME)
 reinstall: rmi | build
 run:
-	@[[ '$(IMAGE_ID)' ]] && docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
+	@[[ '$(IMAGE_ID)' ]] && docker run -p 127.0.0.1:14100:22 --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
 run-debug:
 	@docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -it $(IMAGE_ID) /bin/bash
 attach:

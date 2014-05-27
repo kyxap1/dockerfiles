@@ -4,26 +4,33 @@
 #              Tuning base system.
 # OS:          Debian Wheezy
 # Version:     0.0.1
-# Pre-req:     /opt/dockerbuilds/scripts/mkimage-debootstrap.sh pro-manage.net/debian wheezy http://mirrors.linode.com/debian/
+# Pre-req:     /opt/dockerbuilds/scripts/mkimage-debootstrap.sh -i 'iproute,iputils-ping,apt-utils' pro-manage.net/debian-minimal wheezy http://mirrors.linode.com/debian/
 # Usage:       docker run --hostname="DOMAIN.pro-manage.net" --name="DOMAIN.pro-manage.net" -d CONTAINER_ID
 
 # choose basic image
-FROM pro-manage.net/debian:latest
+FROM pro-manage.net/debian-minimal
 
 MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+EXPOSE 22 80
 
-ADD http://kyxap.org.ua/rc/screenrc /root/.screenrc
-ADD http://kyxap.org.ua/rc/vimrc /root/.vimrc
+# copy dist directory
+ADD dist/ root/dist
 
-RUN apt-get update
-RUN apt-get install -y openssh-server
-RUN apt-get install -y moreutils apt-utils bash-completion bc bridge-utils busybox bzip2 coreutils curl dialog dnsutils dos2unix fakeroot findutils gzip hostname htop iotop iproute iptables iputils-ping less links locales lsof make mtr netcat patch perl procps psmisc pwgen rsync screen sed strace supervisor tar tcpdump telnet unzip vim-nox wget whois zip
+# software
+RUN cp -b /root/dist/sources.list /etc/apt/sources.list; \
+apt-get -q update; apt-get upgrade -q -y; apt-get install -q -y findutils; \
+cat /root/dist/software.list | xargs apt-get install -q -y; \
+mkdir -p /var/run/sshd; \
+mkdir /root/.ssh; chmod 700 /root/.ssh; \
+cp /root/dist/authorized_keys /root/.ssh/authorized_keys; \
+cp /root/dist/supervisord.conf /etc/supervisor/conf.d/supervisord.conf; \
+mkdir -p /var/log/supervisor; \
+rm -rf /root/dist;
 
-RUN mkdir -p /var/run/sshd
-RUN mkdir -p /var/log/supervisor
+ONBUILD RUN rm /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server
 
+# default start command
 CMD ["/usr/bin/supervisord"]
 
 

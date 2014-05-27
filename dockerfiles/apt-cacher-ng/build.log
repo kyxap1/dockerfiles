@@ -1,0 +1,22 @@
+Step 0 : FROM pro-manage.net/debian
+[91m# Executing 1 build triggers
+[0mStep onbuild-0 : RUN rm /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server
+ ---> Using cache
+ ---> 641f1f1e6300
+ ---> 641f1f1e6300
+Step 1 : MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
+ ---> Using cache
+ ---> 9016282e8ec3
+Step 2 : EXPOSE 22 3142
+ ---> Using cache
+ ---> db534f9afea2
+Step 3 : RUN apt-get -q update;apt-get upgrade -q -y;apt-get install -q -y apt-cacher-ng
+ ---> Using cache
+ ---> 5f270a7614f7
+Step 4 : ADD dist/apt-cacher-ng.supervisor.conf /etc/supervisor/conf.d/apt-cacher-ng.conf
+ ---> Using cache
+ ---> f2bfeac572b7
+Step 5 : CMD ["/usr/bin/supervisord"]
+ ---> Using cache
+ ---> 2596b121fd87
+Successfully built 2596b121fd87

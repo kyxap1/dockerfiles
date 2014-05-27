@@ -2,10 +2,10 @@
 #
 SHELL := /bin/bash
 
-IMAGE_NAME= "pro-manage.net/debian"
+IMAGE_NAME= "pro-manage.net/ubuntu"
 IMAGE_ID= $(shell docker inspect --format='{{ .id }}' $(IMAGE_NAME) )
 
-CONTAINER_NAME= "debian.pro-manage.net"
+CONTAINER_NAME= "ubuntu.pro-manage.net"
 CONTAINER_ID= $(shell docker inspect --format='{{ .id }}' $(CONTAINER_NAME) )
 
 all: build
@@ -15,7 +15,7 @@ rmi:
 	-@[[ '$(IMAGE_ID)' ]] && docker rmi -f $(IMAGE_NAME)
 reinstall: rmi | build
 run:
-	@[[ '$(IMAGE_ID)' ]] && docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
+	@[[ '$(IMAGE_ID)' ]] && docker run -p 127.0.0.1:14002:22 -p 198.74.57.97:80:80 -p 198.74.57.97:4949:4949 --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
 run-debug:
 	@docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -it $(IMAGE_ID) /bin/bash
 attach:

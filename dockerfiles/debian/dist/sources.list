@@ -1,0 +1,9 @@
+deb http://mirrors.linode.com/debian/ wheezy main contrib non-free
+deb-src http://mirrors.linode.com/debian/ wheezy main contrib non-free
+
+deb http://security.debian.org/ wheezy/updates main contrib non-free
+deb-src http://security.debian.org/ wheezy/updates main contrib non-free
+
+# wheezy-updates, previously known as 'volatile'
+deb http://mirrors.linode.com/debian/ wheezy-updates main contrib non-free
+deb-src http://mirrors.linode.com/debian/ wheezy-updates main contrib non-free
