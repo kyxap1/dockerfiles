@@ -8,24 +8,29 @@
 # Usage:       docker run --hostname="DOMAIN.pro-manage.net" --name="DOMAIN.pro-manage.net" -d CONTAINER_ID
 
 # choose basic image
-FROM pro-manage.net/debian-minimal
+FROM pro-manage.net/debian-minimal:wheezy
 
 MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
 
-EXPOSE 22 80
+EXPOSE 22
 
 # copy dist directory
-ADD dist/ root/dist
+ADD dist/ /root/dist
 
 # software
-RUN cp -b /root/dist/sources.list /etc/apt/sources.list; \
+RUN cp /root/dist/02apt-cacher-ng /etc/apt/apt.conf.d/02apt-cacher-ng; \
+cp -b /root/dist/sources.list /etc/apt/sources.list; \
+cp -b /root/dist/sources.backports.list /etc/apt/sources.list.d/backports.list; \
+cp /root/dist/locale.gen /etc/locale.gen; \
 apt-get -q update; apt-get upgrade -q -y; apt-get install -q -y findutils; \
 cat /root/dist/software.list | xargs apt-get install -q -y; \
-mkdir -p /var/run/sshd; \
-mkdir /root/.ssh; chmod 700 /root/.ssh; \
+mkdir -p /var/run/sshd; mkdir /root/.ssh; chmod 700 /root/.ssh; \
 cp /root/dist/authorized_keys /root/.ssh/authorized_keys; \
 cp /root/dist/supervisord.conf /etc/supervisor/conf.d/supervisord.conf; \
 mkdir -p /var/log/supervisor; \
+cp -b /root/dist/rsyslog.conf /etc/rsyslog.conf
+
+RUN git clone https://github.com/kyxap1/dotfiles /root/dist/dotfiles; /root/dist/dotfiles/copy.sh; \
 rm -rf /root/dist;
 
 ONBUILD RUN rm /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server

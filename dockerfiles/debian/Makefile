@@ -11,13 +11,14 @@ CONTAINER_ID= $(shell docker inspect --format='{{ .id }}' $(CONTAINER_NAME) )
 all: build
 build:
 	@mispipe "docker build -t $(IMAGE_NAME) --rm=true ." "tee build.log"
+#	@mispipe "docker build -t $(IMAGE_NAME) --rm=false ." "tee build.log"
 rmi:
 	-@[[ '$(IMAGE_ID)' ]] && docker rmi -f $(IMAGE_NAME)
 reinstall: rmi | build
 run:
-	@[[ '$(IMAGE_ID)' ]] && docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
+	@[[ '$(IMAGE_ID)' ]] && docker run --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
 run-debug:
-	@docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -it $(IMAGE_ID) /bin/bash
+	@docker run --name=$(CONTAINER_NAME) --rm=true -it $(IMAGE_ID) /bin/bash
 attach:
 	@docker attach --sig-proxy=false $(CONTAINER_NAME)
 logs:
