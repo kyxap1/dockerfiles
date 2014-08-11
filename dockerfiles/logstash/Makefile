@@ -2,10 +2,10 @@
 #
 SHELL := /bin/bash
 
-IMAGE_NAME= "pro-manage.net/apt-cacher"
+IMAGE_NAME= "pro-manage.net/logs"
 IMAGE_ID= $(shell docker inspect --format='{{ .id }}' $(IMAGE_NAME) )
 
-CONTAINER_NAME= "apt-cacher"
+CONTAINER_NAME= "logs"
 CONTAINER_ID= $(shell docker inspect --format='{{ .id }}' $(CONTAINER_NAME) )
 
 all: build
@@ -15,9 +15,9 @@ rmi:
 	-@[[ '$(IMAGE_ID)' ]] && docker rmi -f $(IMAGE_NAME)
 reinstall: rmi | build
 run:
-	@[[ '$(IMAGE_ID)' ]] && docker run -p 14100:22 -p 3142:3142 --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
+	@[[ '$(IMAGE_ID)' ]] && docker run --name=$(CONTAINER_NAME) -d $(IMAGE_ID)
 run-debug:
-	@docker run --hostname=$(CONTAINER_NAME) --name=$(CONTAINER_NAME) -it $(IMAGE_ID) /bin/bash
+	@docker run --name=$(CONTAINER_NAME) --rm=true -it $(IMAGE_ID) /bin/bash
 attach:
 	@docker attach --sig-proxy=false $(CONTAINER_NAME)
 logs:

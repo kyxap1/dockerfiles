@@ -1,0 +1,336 @@
+Step 0 : FROM pro-manage.net/debian
+[91m# Executing 1 build triggers
+[0mStep onbuild-0 : RUN rm /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server
+ ---> Running in 6bc5b00f2bf2
+[91mdebconf: unable to initialize frontend: Dialog
+[0m[91mdebconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+[0m[91mdebconf: unable to initialize frontend: Readline
+[0m[91mdebconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+[0m[91mCreating SSH2 RSA key; this may take some time ...[0m[91m
+[0m[91mCreating SSH2 DSA key; this may take some time ...[0m[91m
+[0m[91mCreating SSH2 ECDSA key; this may take some time ...[0m[91m
+[0m[91minvoke-rc.d: policy-rc.d denied execution of restart.
+[0m ---> 6ee4e499f279
+ ---> 6ee4e499f279
+Removing intermediate container 6bc5b00f2bf2
+Step 1 : MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
+ ---> Running in df22a47e9fa3
+ ---> cfe162e04900
+Removing intermediate container df22a47e9fa3
+Step 2 : EXPOSE 22 514 9200 9292
+ ---> Running in b3998983e6b7
+ ---> 7d04dad3659a
+Removing intermediate container b3998983e6b7
+Step 3 : ADD dist/ /root/dist
+ ---> 33cb81c264f2
+Removing intermediate container d3f7e2ef183d
+Step 4 : RUN cp /root/dist/elasticsearch.repo.list /etc/apt/sources.list.d/elasticsearch.list;wget -q -4 -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -;apt-get update; apt-get install -q -y logstash elasticsearch;cp /root/dist/logstash.supervisor.conf /etc/supervisor/conf.d/logstash.conf;cp /root/dist/logstash-agent.conf /etc/logstash/conf.d/logstash.conf;cd /opt;git clone https://github.com/elasticsearch/kibana.git /opt/kibana;rm -r /root/dist
+ ---> Running in d7d9a142db9a
+OK
+Get:1 http://packages.elasticsearch.org stable Release.gpg [490 B]
+Get:2 http://packages.elasticsearch.org stable Release.gpg [490 B]
+Hit http://security.debian.org wheezy/updates Release.gpg
+Hit http://mirrors.linode.com wheezy Release.gpg
+Get:3 http://packages.elasticsearch.org stable Release [3316 B]
+Get:4 http://packages.elasticsearch.org stable Release [3301 B]
+Get:5 http://packages.elasticsearch.org stable/main amd64 Packages [1469 B]
+Hit http://mirrors.linode.com wheezy-updates Release.gpg
+Hit http://security.debian.org wheezy/updates Release
+Get:6 http://packages.elasticsearch.org stable/main amd64 Packages [1205 B]
+Hit http://mirrors.linode.com wheezy Release
+Hit http://security.debian.org wheezy/updates/main Sources
+Hit http://mirrors.linode.com wheezy-updates Release
+Hit http://security.debian.org wheezy/updates/contrib Sources
+Hit http://mirrors.linode.com wheezy/main Sources
+Hit http://security.debian.org wheezy/updates/non-free Sources
+Hit http://mirrors.linode.com wheezy/contrib Sources
+Hit http://security.debian.org wheezy/updates/main amd64 Packages
+Hit http://mirrors.linode.com wheezy/non-free Sources
+Hit http://security.debian.org wheezy/updates/contrib amd64 Packages
+Hit http://mirrors.linode.com wheezy/main amd64 Packages
+Hit http://security.debian.org wheezy/updates/non-free amd64 Packages
+Hit http://mirrors.linode.com wheezy/contrib amd64 Packages
+Hit http://security.debian.org wheezy/updates/contrib Translation-en
+Hit http://mirrors.linode.com wheezy/non-free amd64 Packages
+Hit http://security.debian.org wheezy/updates/main Translation-en
+Hit http://mirrors.linode.com wheezy/contrib Translation-en
+Hit http://security.debian.org wheezy/updates/non-free Translation-en
+Hit http://mirrors.linode.com wheezy/main Translation-en
+Ign http://packages.elasticsearch.org stable/main Translation-en
+Hit http://mirrors.linode.com wheezy/non-free Translation-en
+Ign http://packages.elasticsearch.org stable/main Translation-en
+Hit http://mirrors.linode.com wheezy-updates/main Sources
+Hit http://mirrors.linode.com wheezy-updates/contrib Sources
+Hit http://mirrors.linode.com wheezy-updates/non-free Sources
+Hit http://mirrors.linode.com wheezy-updates/main amd64 Packages/DiffIndex
+Hit http://mirrors.linode.com wheezy-updates/contrib amd64 Packages
+Hit http://mirrors.linode.com wheezy-updates/non-free amd64 Packages
+Hit http://mirrors.linode.com wheezy-updates/contrib Translation-en
+Hit http://mirrors.linode.com wheezy-updates/main Translation-en/DiffIndex
+Hit http://mirrors.linode.com wheezy-updates/non-free Translation-en
+Fetched 10.3 kB in 4s (2186 B/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following extra packages will be installed:
+  ca-certificates-java icedtea-7-jre-jamvm java-common liblcms2-2 libnspr4
+  libnss3 libpcsclite1 openjdk-7-jre-headless tzdata-java
+Suggested packages:
+  default-jre equivs liblcms2-utils pcscd libnss-mdns sun-java6-fonts
+  ttf-dejavu-extra fonts-ipafont-gothic fonts-ipafont-mincho ttf-wqy-microhei
+  ttf-wqy-zenhei ttf-indic-fonts
+The following NEW packages will be installed:
+  ca-certificates-java elasticsearch icedtea-7-jre-jamvm java-common
+  liblcms2-2 libnspr4 libnss3 libpcsclite1 logstash openjdk-7-jre-headless
+  tzdata-java
+0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
+Need to get 128 MB of archives.
+After this operation, 183 MB of additional disk space will be used.
+Get:1 http://mirrors.linode.com/debian/ wheezy/main liblcms2-2 amd64 2.2+git20110628-2.2+deb7u1 [144 kB]
+Get:2 http://packages.elasticsearch.org/elasticsearch/1.1/debian/ stable/main elasticsearch all 1.1.2 [19.1 MB]
+Get:3 http://security.debian.org/ wheezy/updates/main openjdk-7-jre-headless amd64 7u55-2.4.7-1~deb7u1 [41.5 MB]
+Get:4 http://mirrors.linode.com/debian/ wheezy/main libnspr4 amd64 2:4.9.2-1+deb7u1 [140 kB]
+Get:5 http://mirrors.linode.com/debian/ wheezy/main libnss3 amd64 2:3.14.5-1 [1064 kB]
+Get:6 http://mirrors.linode.com/debian/ wheezy/main libpcsclite1 amd64 1.8.4-1+deb7u1 [57.0 kB]
+Get:7 http://mirrors.linode.com/debian/ wheezy/main ca-certificates-java all 20121112+nmu2 [14.9 kB]
+Get:8 http://mirrors.linode.com/debian/ wheezy-updates/main tzdata-java all 2014c-0wheezy1 [132 kB]
+Get:9 http://mirrors.linode.com/debian/ wheezy/main java-common all 0.47 [66.1 kB]
+Get:10 http://packages.elasticsearch.org/logstash/1.4/debian/ stable/main logstash all 1.4.1-1-bd507eb [64.9 MB]
+Get:11 http://security.debian.org/ wheezy/updates/main icedtea-7-jre-jamvm amd64 7u55-2.4.7-1~deb7u1 [685 kB]
+[91mdebconf: unable to initialize frontend: Dialog
+[0m[91mdebconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+[0m[91mdebconf: unable to initialize frontend: Readline
+[0m[91mdebconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+[0m[91mdpkg-preconfigure: unable to re-open stdin: 
+[0mFetched 128 MB in 2s (55.9 MB/s)
+Selecting previously unselected package liblcms2-2:amd64.
+(Reading database ... 21232 files and directories currently installed.)
+Unpacking liblcms2-2:amd64 (from .../liblcms2-2_2.2+git20110628-2.2+deb7u1_amd64.deb) ...
+Selecting previously unselected package libnspr4:amd64.
+Unpacking libnspr4:amd64 (from .../libnspr4_2%3a4.9.2-1+deb7u1_amd64.deb) ...
+Selecting previously unselected package libnss3:amd64.
+Unpacking libnss3:amd64 (from .../libnss3_2%3a3.14.5-1_amd64.deb) ...
+Selecting previously unselected package libpcsclite1:amd64.
+Unpacking libpcsclite1:amd64 (from .../libpcsclite1_1.8.4-1+deb7u1_amd64.deb) ...
+Selecting previously unselected package ca-certificates-java.
+Unpacking ca-certificates-java (from .../ca-certificates-java_20121112+nmu2_all.deb) ...
+Selecting previously unselected package tzdata-java.
+Unpacking tzdata-java (from .../tzdata-java_2014c-0wheezy1_all.deb) ...
+Selecting previously unselected package java-common.
+Unpacking java-common (from .../java-common_0.47_all.deb) ...
+Selecting previously unselected package openjdk-7-jre-headless:amd64.
+Unpacking openjdk-7-jre-headless:amd64 (from .../openjdk-7-jre-headless_7u55-2.4.7-1~deb7u1_amd64.deb) ...
+Selecting previously unselected package elasticsearch.
+Unpacking elasticsearch (from .../elasticsearch_1.1.2_all.deb) ...
+Selecting previously unselected package icedtea-7-jre-jamvm:amd64.
+Unpacking icedtea-7-jre-jamvm:amd64 (from .../icedtea-7-jre-jamvm_7u55-2.4.7-1~deb7u1_amd64.deb) ...
+Selecting previously unselected package logstash.
+Unpacking logstash (from .../logstash_1.4.1-1-bd507eb_all.deb) ...
+Processing triggers for ca-certificates ...
+Updating certificates in /etc/ssl/certs... 0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d....done.
+Setting up liblcms2-2:amd64 (2.2+git20110628-2.2+deb7u1) ...
+Setting up libnspr4:amd64 (2:4.9.2-1+deb7u1) ...
+Setting up libnss3:amd64 (2:3.14.5-1) ...
+Setting up libpcsclite1:amd64 (1.8.4-1+deb7u1) ...
+Setting up tzdata-java (2014c-0wheezy1) ...
+Setting up java-common (0.47) ...
+Setting up elasticsearch (1.1.2) ...
+Adding system user `elasticsearch' (UID 104) ...
+Adding new user `elasticsearch' (UID 104) with group `elasticsearch' ...
+Not creating home directory `/usr/share/elasticsearch'.
+### NOT starting elasticsearch by default on bootup, please execute
+ sudo update-rc.d elasticsearch defaults 95 10
+### In order to start elasticsearch, execute
+ sudo /etc/init.d/elasticsearch start
+Setting up openjdk-7-jre-headless:amd64 (7u55-2.4.7-1~deb7u1) ...
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java to provide /usr/bin/java (java) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/keytool to provide /usr/bin/keytool (keytool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/pack200 to provide /usr/bin/pack200 (pack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/rmid to provide /usr/bin/rmid (rmid) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/rmiregistry to provide /usr/bin/rmiregistry (rmiregistry) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/unpack200 to provide /usr/bin/unpack200 (unpack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/orbd to provide /usr/bin/orbd (orbd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/servertool to provide /usr/bin/servertool (servertool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/tnameserv to provide /usr/bin/tnameserv (tnameserv) in auto mode
+update-alternatives: using /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jexec to provide /usr/bin/jexec (jexec) in auto mode
+Setting up icedtea-7-jre-jamvm:amd64 (7u55-2.4.7-1~deb7u1) ...
+Setting up logstash (1.4.1-1-bd507eb) ...
+Setting up ca-certificates-java (20121112+nmu2) ...
+Adding debian:Starfield_Class_2_CA.pem
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G5.pem
+Adding debian:Entrust.net_Premium_2048_Secure_Server_CA.pem
+Adding debian:Sonera_Class_2_Root_CA.pem
+Adding debian:Camerfirma_Global_Chambersign_Root.pem
+Adding debian:Comodo_Secure_Services_root.pem
+Adding debian:TDC_Internet_Root_CA.pem
+Adding debian:SecureSign_RootCA11.pem
+Adding debian:RSA_Security_2048_v3.pem
+Adding debian:SwissSign_Platinum_CA_-_G2.pem
+Adding debian:AffirmTrust_Premium.pem
+Adding debian:GeoTrust_Universal_CA_2.pem
+Adding debian:Deutsche_Telekom_Root_CA_2.pem
+Adding debian:Hongkong_Post_Root_CA_1.pem
+Adding debian:America_Online_Root_Certification_Authority_2.pem
+Adding debian:ACEDICOM_Root.pem
+Adding debian:ePKI_Root_Certification_Authority.pem
+Adding debian:Visa_eCommerce_Root.pem
+Adding debian:ValiCert_Class_2_VA.pem
+Adding debian:AddTrust_External_Root.pem
+Adding debian:Chambers_of_Commerce_Root_-_2008.pem
+Adding debian:AddTrust_Low-Value_Services_Root.pem
+Adding debian:Verisign_Class_3_Public_Primary_Certification_Authority.pem
+Adding debian:GlobalSign_Root_CA.pem
+Adding debian:Entrust.net_Secure_Server_CA.pem
+Adding debian:E-Guven_Kok_Elektronik_Sertifika_Hizmet_Saglayicisi.pem
+Adding debian:Izenpe.com.pem
+Adding debian:thawte_Primary_Root_CA.pem
+Adding debian:Root_CA_Generalitat_Valenciana.pem
+Adding debian:Verisign_Class_2_Public_Primary_Certification_Authority_-_G2.pem
+Adding debian:Microsec_e-Szigno_Root_CA_2009.pem
+Adding debian:DigiCert_Assured_ID_Root_CA.pem
+Adding debian:A-Trust-nQual-03.pem
+Adding debian:TÜBİTAK_UEKAE_Kök_Sertifika_Hizmet_Sağlayıcısı_-_Sürüm_3.pem
+Adding debian:Global_Chambersign_Root_-_2008.pem
+Adding debian:TURKTRUST_Certificate_Services_Provider_Root_1.pem
+Adding debian:Verisign_Class_3_Public_Primary_Certification_Authority_-_G2.pem
+Adding debian:Go_Daddy_Class_2_CA.pem
+Adding debian:spi-cacert-2008.pem
+Adding debian:Security_Communication_Root_CA.pem
+Adding debian:COMODO_ECC_Certification_Authority.pem
+Adding debian:QuoVadis_Root_CA_3.pem
+Adding debian:ComSign_Secured_CA.pem
+Adding debian:RSA_Root_Certificate_1.pem
+Adding debian:DigiCert_High_Assurance_EV_Root_CA.pem
+Adding debian:CA_Disig.pem
+Adding debian:EBG_Elektronik_Sertifika_Hizmet_Sağlayıcısı.pem
+Adding debian:T-TeleSec_GlobalRoot_Class_3.pem
+Adding debian:Microsec_e-Szigno_Root_CA.pem
+Adding debian:Thawte_Server_CA.pem
+Adding debian:IGC_A.pem
+Adding debian:Buypass_Class_2_CA_1.pem
+Adding debian:Juur-SK.pem
+Adding debian:Verisign_Class_1_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:S-TRUST_Authentication_and_Encryption_Root_CA_2005_PN.pem
+Adding debian:TC_TrustCenter_Class_2_CA_II.pem
+Adding debian:AddTrust_Public_Services_Root.pem
+Adding debian:COMODO_Certification_Authority.pem
+Adding debian:AffirmTrust_Commercial.pem
+Adding debian:Entrust_Root_Certification_Authority.pem
+Adding debian:Digital_Signature_Trust_Co._Global_CA_1.pem
+Adding debian:NetLock_Express_=Class_C=_Root.pem
+Adding debian:Baltimore_CyberTrust_Root.pem
+Adding debian:Starfield_Services_Root_Certificate_Authority_-_G2.pem
+Adding debian:Secure_Global_CA.pem
+Adding debian:SwissSign_Gold_CA_-_G2.pem
+Adding debian:TWCA_Root_Certification_Authority.pem
+Adding debian:SwissSign_Silver_CA_-_G2.pem
+Adding debian:Buypass_Class_2_Root_CA.pem
+Adding debian:Comodo_Trusted_Services_root.pem
+Adding debian:Verisign_Class_1_Public_Primary_Certification_Authority_-_G2.pem
+Adding debian:UTN_DATACorp_SGC_Root_CA.pem
+Adding debian:Equifax_Secure_eBusiness_CA_1.pem
+Adding debian:DigiCert_Global_Root_CA.pem
+Adding debian:Trustis_FPS_Root_CA.pem
+Adding debian:Buypass_Class_3_CA_1.pem
+Adding debian:StartCom_Certification_Authority.pem
+Adding debian:AC_Raíz_Certicámara_S.A..pem
+Adding debian:DST_ACES_CA_X6.pem
+Adding debian:VeriSign_Universal_Root_Certification_Authority.pem
+Adding debian:Staat_der_Nederlanden_Root_CA_-_G2.pem
+Adding debian:GeoTrust_Primary_Certification_Authority.pem
+Adding debian:America_Online_Root_Certification_Authority_1.pem
+Adding debian:GlobalSign_Root_CA_-_R3.pem
+Adding debian:DST_Root_CA_X3.pem
+Adding debian:GeoTrust_Universal_CA.pem
+Adding debian:TC_TrustCenter_Universal_CA_III.pem
+Adding debian:Certum_Trusted_Network_CA.pem
+Adding debian:GTE_CyberTrust_Global_Root.pem
+Adding debian:Staat_der_Nederlanden_Root_CA.pem
+Adding debian:Equifax_Secure_eBusiness_CA_2.pem
+Adding debian:Actalis_Authentication_Root_CA.pem
+Adding debian:Wells_Fargo_Root_CA.pem
+Adding debian:GlobalSign_Root_CA_-_R2.pem
+Adding debian:QuoVadis_Root_CA_2.pem
+Adding debian:Verisign_Class_4_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:certSIGN_ROOT_CA.pem
+Adding debian:ValiCert_Class_1_VA.pem
+Adding debian:TURKTRUST_Certificate_Services_Provider_Root_2.pem
+Adding debian:Security_Communication_RootCA2.pem
+Adding debian:EC-ACC.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G2.pem
+Adding debian:StartCom_Certification_Authority_G2.pem
+Adding debian:TDC_OCES_Root_CA.pem
+Adding debian:NetLock_Qualified_=Class_QA=_Root.pem
+Adding debian:AffirmTrust_Premium_ECC.pem
+Adding debian:Verisign_Class_3_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:AffirmTrust_Networking.pem
+Adding debian:Taiwan_GRCA.pem
+Adding debian:TC_TrustCenter_Universal_CA_I.pem
+Adding debian:NetLock_Business_=Class_B=_Root.pem
+Adding debian:Swisscom_Root_CA_1.pem
+Adding debian:TC_TrustCenter_Class_3_CA_II.pem
+Adding debian:Go_Daddy_Root_Certificate_Authority_-_G2.pem
+Adding debian:Equifax_Secure_Global_eBusiness_CA.pem
+Adding debian:Starfield_Root_Certificate_Authority_-_G2.pem
+Adding debian:NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+Adding debian:ca.pem
+Adding debian:Certplus_Class_2_Primary_CA.pem
+Adding debian:XRamp_Global_CA_Root.pem
+Adding debian:Verisign_Class_1_Public_Primary_Certification_Authority.pem
+Adding debian:thawte_Primary_Root_CA_-_G2.pem
+Adding debian:Security_Communication_EV_RootCA1.pem
+Adding debian:spi-ca-2003.pem
+Adding debian:Certum_Root_CA.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G3.pem
+Adding debian:Cybertrust_Global_Root.pem
+Adding debian:GeoTrust_Global_CA_2.pem
+Adding debian:Network_Solutions_Certificate_Authority.pem
+Adding debian:Verisign_Class_2_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:WellsSecure_Public_Root_Certificate_Authority.pem
+Adding debian:QuoVadis_Root_CA.pem
+Adding debian:Certigna.pem
+Adding debian:SecureTrust_CA.pem
+Adding debian:UTN_USERFirst_Hardware_Root_CA.pem
+Adding debian:Certinomis_-_Autorité_Racine.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2011.pem
+Adding debian:GeoTrust_Global_CA.pem
+Adding debian:Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+Adding debian:Buypass_Class_3_Root_CA.pem
+Adding debian:Comodo_AAA_Services_root.pem
+Adding debian:thawte_Primary_Root_CA_-_G3.pem
+Adding debian:cacert.org.pem
+Adding debian:Thawte_Premium_Server_CA.pem
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G4.pem
+Adding debian:CNNIC_ROOT.pem
+Adding debian:ApplicationCA_-_Japanese_Government.pem
+Adding debian:Sonera_Class_1_Root_CA.pem
+Adding debian:UTN_USERFirst_Email_Root_CA.pem
+Adding debian:Camerfirma_Chambers_of_Commerce_Root.pem
+Adding debian:AddTrust_Qualified_Certificates_Root.pem
+Adding debian:Equifax_Secure_CA.pem
+Adding debian:ComSign_CA.pem
+Adding debian:Firmaprofesional_Root_CA.pem
+Adding debian:EE_Certification_Centre_Root_CA.pem
+Adding debian:NetLock_Notary_=Class_A=_Root.pem
+Adding debian:Digital_Signature_Trust_Co._Global_CA_3.pem
+Adding debian:OISTE_WISeKey_Global_Root_GA_CA.pem
+done.
+Processing triggers for ca-certificates ...
+Updating certificates in /etc/ssl/certs... 0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d....
+done.
+done.
+Cloning into '/opt/kibana'...
+ ---> bfbc1b91c738
+Removing intermediate container d7d9a142db9a
+Step 5 : CMD ["/usr/bin/supervisord"]
+ ---> Running in 0b8d9a609ca7
+ ---> 1f717616c53d
+Removing intermediate container 0b8d9a609ca7
+Successfully built 1f717616c53d

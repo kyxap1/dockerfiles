@@ -1,0 +1,1 @@
+tar cjf nginx-conf.tar.bz2 /etc/nginx; tar cjf nginx-ui.tar.bz2 /var/www/html; scp nginx*.bz2 -P14004 root@nest.pro-manage.net:/root/rtmp.configs/

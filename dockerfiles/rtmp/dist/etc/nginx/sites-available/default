@@ -1,0 +1,58 @@
+server {
+	listen       80;
+	
+	root html/;
+	index index.php index.html;
+	
+	server_name  localhost;
+
+	# PHP Pear
+	location ~ ^(.+\.php)(/.*)?$ {
+		fastcgi_pass  localhost:9000;
+		include /etc/nginx/fastcgi_params;
+	}
+	
+	# JSON API
+	rewrite /api.json?(.*)$ /json.php?( last;
+	
+	# Serve recorded sessions
+	location /rec {
+		root /var/tmp;
+		autoindex on; # directory list accepted
+	}
+	
+	# Serve HLS fragments
+	location /hls {
+		root /var/tmp;
+		add_header Cache-Control no-cache;
+		types {
+			application/vnd.apple.mpegurl m3u8;
+			video/mp2t ts;
+		}
+	}
+	
+	# Serve DASH fragments
+	location /dash {
+		root /var/tmp;
+		add_header Cache-Control no-cache;
+	}
+	
+	# RTMP Stat
+	location /stat {
+		rtmp_stat all;
+		rtmp_stat_stylesheet /stat.xsl;
+	}
+	location /stat.xsl {
+		root html;
+	}
+
+	# RTMP Control
+	location /control {
+		rtmp_control all;
+	}
+
+	error_page   500 502 503 504  /50x.html;
+	location = /50x.html {
+		root   html;
+	}
+}

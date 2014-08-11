@@ -2,21 +2,100 @@ Step 0 : FROM pro-manage.net/debian
 [91m# Executing 1 build triggers
 [0mStep onbuild-0 : RUN rm /etc/ssh/ssh_host_*; dpkg-reconfigure openssh-server
  ---> Using cache
- ---> 641f1f1e6300
- ---> 641f1f1e6300
+ ---> 587f28031ebe
+ ---> 587f28031ebe
 Step 1 : MAINTAINER Alexander Kyxap <kyxap@pro-manage.net>
  ---> Using cache
- ---> 9016282e8ec3
+ ---> 4ebb80deb8d8
 Step 2 : EXPOSE 22 3142
  ---> Using cache
- ---> db534f9afea2
-Step 3 : RUN apt-get -q update;apt-get upgrade -q -y;apt-get install -q -y apt-cacher-ng
- ---> Using cache
- ---> 5f270a7614f7
-Step 4 : ADD dist/apt-cacher-ng.supervisor.conf /etc/supervisor/conf.d/apt-cacher-ng.conf
- ---> Using cache
- ---> f2bfeac572b7
-Step 5 : CMD ["/usr/bin/supervisord"]
- ---> Using cache
- ---> 2596b121fd87
-Successfully built 2596b121fd87
+ ---> ec5404b0c81c
+Step 3 : ADD dist/02apt-cacher-ng /etc/apt/apt.conf.d/02apt-cacher-ng
+ ---> 1e0a678c1ca4
+Removing intermediate container dd038018e10a
+Step 4 : RUN apt-get -q update;apt-get upgrade -q -y;apt-get install -q -y apt-cacher-ng;mkdir -p /var/run/apt-cacher-ng;chown apt-cacher-ng:apt-cacher-ng /var/run/apt-cacher-ng
+ ---> Running in 14ce710d583c
+Hit http://mirrors.linode.com wheezy Release.gpg
+Hit http://mirrors.linode.com wheezy-updates Release.gpg
+Hit http://mirrors.linode.com wheezy Release
+Hit http://mirrors.linode.com wheezy-updates Release
+Hit http://mirrors.linode.com wheezy/main Sources
+Hit http://mirrors.linode.com wheezy/contrib Sources
+Hit http://mirrors.linode.com wheezy/non-free Sources
+Hit http://mirrors.linode.com wheezy/main amd64 Packages
+Hit http://mirrors.linode.com wheezy/contrib amd64 Packages
+Hit http://mirrors.linode.com wheezy/non-free amd64 Packages
+Hit http://mirrors.linode.com wheezy/contrib Translation-en
+Hit http://mirrors.linode.com wheezy/main Translation-en
+Hit http://mirrors.linode.com wheezy/non-free Translation-en
+Hit http://mirrors.linode.com wheezy-updates/main Sources
+Hit http://mirrors.linode.com wheezy-updates/contrib Sources
+Hit http://mirrors.linode.com wheezy-updates/non-free Sources
+Hit http://mirrors.linode.com wheezy-updates/main amd64 Packages/DiffIndex
+Hit http://mirrors.linode.com wheezy-updates/contrib amd64 Packages
+Hit http://mirrors.linode.com wheezy-updates/non-free amd64 Packages
+Hit http://mirrors.linode.com wheezy-updates/contrib Translation-en
+Hit http://mirrors.linode.com wheezy-updates/main Translation-en/DiffIndex
+Hit http://mirrors.linode.com wheezy-updates/non-free Translation-en
+Hit http://security.debian.org wheezy/updates Release.gpg
+Hit http://security.debian.org wheezy/updates Release
+Hit http://security.debian.org wheezy/updates/main Sources
+Hit http://security.debian.org wheezy/updates/contrib Sources
+Hit http://security.debian.org wheezy/updates/non-free Sources
+Hit http://security.debian.org wheezy/updates/main amd64 Packages
+Hit http://security.debian.org wheezy/updates/contrib amd64 Packages
+Hit http://security.debian.org wheezy/updates/non-free amd64 Packages
+Hit http://security.debian.org wheezy/updates/contrib Translation-en
+Hit http://security.debian.org wheezy/updates/main Translation-en
+Hit http://security.debian.org wheezy/updates/non-free Translation-en
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following extra packages will be installed:
+  ed
+Suggested packages:
+  doc-base libfuse2
+The following NEW packages will be installed:
+  apt-cacher-ng ed
+0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 477 kB of archives.
+After this operation, 1330 kB of additional disk space will be used.
+Get:1 http://mirrors.linode.com/debian/ wheezy/main apt-cacher-ng amd64 0.7.11-1 [420 kB]
+Get:2 http://mirrors.linode.com/debian/ wheezy/main ed amd64 1.6-2 [57.6 kB]
+[91mdebconf: unable to initialize frontend: Dialog
+[0m[91mdebconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+[0m[91mdebconf: unable to initialize frontend: Readline
+[0m[91mdebconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+[0m[91mdpkg-preconfigure: unable to re-open stdin: 
+[0mFetched 477 kB in 0s (6491 kB/s)
+Selecting previously unselected package apt-cacher-ng.
+(Reading database ... 21232 files and directories currently installed.)
+Unpacking apt-cacher-ng (from .../apt-cacher-ng_0.7.11-1_amd64.deb) ...
+Selecting previously unselected package ed.
+Unpacking ed (from .../archives/ed_1.6-2_amd64.deb) ...
+Setting up apt-cacher-ng (0.7.11-1) ...
+[91mdebconf: unable to initialize frontend: Dialog
+[0m[91mdebconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+[0m[91mdebconf: unable to initialize frontend: Readline
+[0m[91mdebconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+[0m[91minvoke-rc.d: policy-rc.d denied execution of start.
+[0mSetting up ed (1.6-2) ...
+ ---> ef7062ae5d34
+Removing intermediate container 14ce710d583c
+Step 5 : ADD dist/apt-cacher-ng.supervisor.conf /etc/supervisor/conf.d/apt-cacher-ng.conf
+ ---> c0773cf87f02
+Removing intermediate container 1be8ffc6d7cc
+Step 6 : CMD ["/usr/bin/supervisord"]
+ ---> Running in f3854bcc6bc9
+ ---> 09db122ea8d4
+Removing intermediate container f3854bcc6bc9
+Successfully built 09db122ea8d4

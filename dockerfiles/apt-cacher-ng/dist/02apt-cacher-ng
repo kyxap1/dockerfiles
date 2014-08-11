@@ -1,0 +1,2 @@
+# avoiding use own apt-cacher service
+//Acquire::http { Proxy "http://apt-cacher:3142"; };
