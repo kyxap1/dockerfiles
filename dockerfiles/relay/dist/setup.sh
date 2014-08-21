@@ -6,8 +6,6 @@ LANG="en_US.UTF-8"
 LANGUAGE="en_US:en"
 EOF
 
-cat /etc/resolv.conf
-
 cp /root/dist/02apt-cacher-ng /etc/apt/apt.conf.d/02apt-cacher-ng
 
 source /etc/default/locale
@@ -40,11 +38,13 @@ EOF
 mkdir -p /etc/service/sendmail
 cat >> /etc/service/sendmail/run << 'EOF'
 #!/usr/bin/env bash
-/usr/sbin/sendmail -bd -v -q 15m
+/usr/sbin/sendmail -bD -q 15m
 
 EOF
 
 chmod +x /etc/service/sendmail/run
+
+# trying to skip sendmail DNS timeout inside build container
 
 newaliases
 make -C /etc/mail
