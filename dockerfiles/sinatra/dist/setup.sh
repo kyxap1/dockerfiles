@@ -13,7 +13,8 @@ cp /root/dist/02apt-cacher-ng /etc/apt/apt.conf.d/02apt-cacher-ng
 source /etc/default/locale
 
 # install packages
-apt-get update
+apt-get update -q
+apt-get upgrade -qy
 apt-get install -qy wget findutils git-core
 
 # install dotfiles

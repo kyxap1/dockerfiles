@@ -45,6 +45,7 @@ apt-get -qy install libxml2-dev libxslt1-dev
 
 # install ffmpeg
 apt-get update -q
+apt-get upgrade -qy
 apt-get install -qy --force-yes deb-multimedia-keyring
 apt-get update -q
 apt-get install -qy -t jessie ffmpeg libav-tools

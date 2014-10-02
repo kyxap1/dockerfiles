@@ -13,7 +13,7 @@ ADD dist/ /root/dist
 
 RUN cp /root/dist/elasticsearch.repo.list /etc/apt/sources.list.d/elasticsearch.list; \
 wget -q -4 -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -; \
-apt-get update; apt-get install -q -y logstash elasticsearch; \
+apt-get update; apt-get upgrade -qy; apt-get install -q -y logstash elasticsearch; \
 cp /root/dist/logstash.supervisor.conf /etc/supervisor/conf.d/logstash.conf; \
 cp /root/dist/logstash-agent.conf /etc/logstash/conf.d/logstash.conf; \
 cd /opt; \

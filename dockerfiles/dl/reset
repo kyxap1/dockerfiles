@@ -1,0 +1,3 @@
+docker stop dl; docker rm dl; docker rmi kyxap.pro/dl ; docker build -t kyxap.pro/dl --rm=true .; /opt/dockerbuilds/scripts/run_dl.sh
+
+ssh-keygen -f "/root/.ssh/known_hosts" -R [localhost]:14010

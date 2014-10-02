@@ -12,6 +12,7 @@ source /etc/default/locale
 
 # install packages
 apt-get update
+apt-get upgrade -qy
 apt-get install -qy wget findutils git-core sendmail-base bash-completion sendmail-bin
 
 # sendmail setup
